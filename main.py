@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+
 from preprocessing import PreProcessing
 
 bike_sharing_path = "/Users/Alessia/Desktop/Bike_Sharing/Bike-Sharing-Dataset/"
@@ -64,5 +65,10 @@ if __name__ == "__main__":
     new_features = (new_data_hourly.columns).tolist()
 
     new_features.remove("cnt")
+
+    #print (new_data_hourly)
+
+    # Remove outliers in "cnt" (count rate)
+    new_data_hourly = PreProcessing.remove_outliers(new_data_hourly, "cnt", 3)
 
     #print (new_data_hourly)
