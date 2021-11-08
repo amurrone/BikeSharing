@@ -4,6 +4,7 @@
 
 import os
 import pandas as pd
+import numpy as np
 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
@@ -50,3 +51,23 @@ class PreProcessing():
         feature_df = pd.DataFrame(feature_arr, columns=feature_labels)
 
         return feature_df
+
+    # Remove outliers
+
+    def remove_outliers(df, col, std):
+        """
+        Remove outliers.
+
+        Parameters:
+        ===========
+        df: pandas.DataFrame containing the specified column
+        col: column (input feature)
+        std: how many standard deviations should the value be from the mean value to be considered as outlier (3 is a standard convention)
+
+        Return:
+        =======
+        new_df: new pandas.Dataframe with outliers removed
+        """
+        new_df = df[np.abs(df[col] - df[col].mean()) <= std*df[col].std()]
+
+        return new_df
