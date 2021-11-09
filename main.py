@@ -82,3 +82,15 @@ if __name__ == "__main__":
     new_data_hourly = PreProcessing.remove_outliers(new_data_hourly, "cnt", 3)
 
     #print (new_data_hourly)
+
+    # Split the dataset into train and test samples 
+    train_set, test_set = train_test_split(new_data_hourly, test_size=0.33, random_state=123)
+
+    feats_train = train_set.reindex(columns=new_features).values
+    feats_test = test_set.reindex(columns=new_features).values
+
+    target_train = train_set.reindex(columns=TARGET).values.ravel()
+    target_test = test_set.reindex(columns=TARGET).values.ravel()
+
+    #train_set.hist(column="cnt", bins=1000)
+    #test_set.hist(column="cnt", bins=1000)
