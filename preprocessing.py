@@ -1,5 +1,5 @@
 # ========================================
-# Class dedicated to preprocessing of data
+# Class dedicated to the preprocessing of data
 # ========================================
 
 import os
