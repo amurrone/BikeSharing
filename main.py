@@ -1,14 +1,28 @@
 import os
 import pandas as pd
+import argparse
 
 from preprocessing import PreProcessing
 
-bike_sharing_path = "/Users/Alessia/Desktop/Bike_Sharing/Bike-Sharing-Dataset/"
+from sklearn.model_selection import train_test_split
+
 csv_hourly = "hour.csv"
 csv_daily = "day.csv"
 
+
+# List of input features divided into categorical and numerical features
+# Instant and dteday are not used.
+# Casual and registered users are of course not used when building the predictive model.
 categorical_features = ["yr", "season", "mnth", "hr", "holiday", "weekday", "workingday", "weathersit"]
 numerical_features = ["atemp", "temp", "hum", "windspeed", "cnt"]
+target = ["cnt"]
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--dir", help="path to the input directory")
+args = parser.parse_args()
+print(args.input)
+
+use_ohe = args.dir
 
 if __name__ == "__main__":
 
@@ -46,9 +60,6 @@ if __name__ == "__main__":
 
 
     # One hot encoding of categorical features
-    # Features are listed in categorical_features and numerical_features lists.
-    # Instant and dteday are not used.
-    # Casual and registered users are of course not used when building the predictive model.
 
     list_final_features = []
     list_labels = []
@@ -66,7 +77,6 @@ if __name__ == "__main__":
 
     new_features.remove("cnt")
 
-    #print (new_data_hourly)
 
     # Remove outliers in "cnt" (count rate)
     new_data_hourly = PreProcessing.remove_outliers(new_data_hourly, "cnt", 3)
