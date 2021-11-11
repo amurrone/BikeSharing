@@ -7,6 +7,7 @@ import datetime
 import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, BatchNormalization
+from tensorflow.keras.models import load_model
 tf.random.set_seed(0)
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
@@ -51,7 +52,7 @@ class NeuralNetwork():
 
         Parameters:
         ===========
-        model: tf.keras neural network model.
+        model: tf.keras neural network model
         optimizer: optimizer algorithm
         loss: loss function
         metrics: metrics
@@ -76,3 +77,22 @@ class NeuralNetwork():
         model.save("saved_models/"+trained_model+".h5")
 
         return history, model
+
+    def test(self, trained_model, features):
+        """
+        Test the neural network regression model
+
+        Parameters:
+        ===========
+        trained_model: name of the train model saved
+        features: input features
+
+        Return:
+        =======
+        tensorflow.keras model prediction
+        """
+        
+        model = tf.keras.models.load_model("saved_models/"+trained_model+".h5")
+        prediction = model.predict(features)
+
+        return prediction

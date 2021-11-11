@@ -1,11 +1,13 @@
 import os
 import pandas as pd
 import argparse
+import numpy as np
 
 from preprocessing import PreProcessing
 from neural_network import NeuralNetwork
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 csv_hourly = "hour.csv"
 csv_daily = "day.csv"
@@ -94,11 +96,25 @@ if __name__ == "__main__":
     #test_set.hist(column="cnt", bins=1000)
 
     # Build the neural network
-    dnn = NeuralNetwork(100, 3)
+    dnn = NeuralNetwork(neurons=100, hidden_layers=3)
     dnn_model = dnn.build_model(activation="relu", batch_norm="True")
 
     # Train the neural network
-    dnn.train(model=dnn_model, optimizer="adam", loss="mse", metrics="accuracy", features=feats_train, target=target_train, epochs=10, verbose=1, validation_split=0.2, trained_model="bike_sharing_trained")
-
+    dnn_training = dnn.train(model=dnn_model, optimizer="adam", loss="mse", metrics="accuracy", features=feats_train, target=target_train, epochs=10, verbose=1, validation_split=0.2, trained_model="bike_sharing_trained")
+    history = dnn_training[0]
 
     #print (dnn_model.summary())
+
+    # Evaluate the training performances
+    dnn_prediction_train = dnn.test(trained_model="bike_sharing_trained", features=feats_train)
+
+    dnn_mae_train = mean_absolute_error(dnn_prediction_train, target_train)
+    dnn_mse_train = mean_squared_error(dnn_prediction_train, target_train)
+    dnn_rmse_train = np.sqrt(dnn_mse_train)
+
+
+    print ("True value training:", target_train)
+    print ("DNN prediction training:", dnn_prediction_train)
+
+    print ("Mean absolute error training:", dnn_mae_train)
+    print ("Root mean squared error training:", dnn_rmse_train)
