@@ -1,12 +1,15 @@
-# ===================================
+# ==============================================================================
 # Neural network class
-# ===================================
+# ==============================================================================
+
+import datetime
 
 import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, BatchNormalization
 tf.random.set_seed(0)
 from sklearn.metrics import mean_squared_error, mean_absolute_error
+
 
 class NeuralNetwork():
 
@@ -31,13 +34,45 @@ class NeuralNetwork():
 
         Return:
         =======
-        Neural network model.
+        tensorflow.keras neural network model.
         """
 
         model = Sequential()
         for h in range(self.hidden_layers):
             model.add(BatchNormalization()) if batch_norm else None
-            model.add(Dense(self.neurons, activation))
+            model.add(Dense(self.neurons, activation=activation))
         model.add(Dense(1))
 
         return model
+
+    def train(self, model, optimizer, loss, metrics, features, target, epochs, verbose, validation_split, trained_model):
+        """
+        Train the neural network regression model
+
+        Parameters:
+        ===========
+        model: tf.keras neural network model.
+        optimizer: optimizer algorithm
+        loss: loss function
+        metrics: metrics
+        features: input features
+        target: target features
+        epochs: number of epochs
+        verbose: verbose
+        validation_split: fraction of training dataset allocated for validation
+        trained_model: name of the train model to be saved
+
+        Return:
+        =======
+        tensorflow.keras history object
+        tensorflow.keras trained model
+        """
+
+        model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+
+        log_dir = "logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+        history = model.fit(features, target, epochs=epochs, verbose=verbose, validation_split=validation_split, callbacks=[tensorboard_callback])
+        model.save("saved_models/"+trained_model+".h5")
+
+        return history, model

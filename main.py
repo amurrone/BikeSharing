@@ -94,7 +94,11 @@ if __name__ == "__main__":
     #test_set.hist(column="cnt", bins=1000)
 
     # Build the neural network
-    dnn = NeuralNetwork(100, 3) # Specify number of neurons and number of hidden layers
-    dnn_model = dnn.build_model(activation="relu", batch_norm="True") # Specifiy activation function and
+    dnn = NeuralNetwork(100, 3)
+    dnn_model = dnn.build_model(activation="relu", batch_norm="True")
+
+    # Train the neural network
+    dnn.train(model=dnn_model, optimizer="adam", loss="mse", metrics="accuracy", features=feats_train, target=target_train, epochs=10, verbose=1, validation_split=0.2, trained_model="bike_sharing_trained")
+
 
     #print (dnn_model.summary())
