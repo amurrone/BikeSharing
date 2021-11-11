@@ -92,3 +92,9 @@ if __name__ == "__main__":
 
     #train_set.hist(column="cnt", bins=1000)
     #test_set.hist(column="cnt", bins=1000)
+
+    # Build the neural network
+    dnn = NeuralNetwork(100, 3) # Specify number of neurons and number of hidden layers
+    dnn_model = dnn.build_model(activation="relu", batch_norm="True") # Specifiy activation function and
+
+    #print (dnn_model.summary())
