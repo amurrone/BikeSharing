@@ -119,6 +119,21 @@ if __name__ == "__main__":
     print ("Mean absolute error training:", dnn_mae_train)
     print ("Root mean squared error training:", dnn_rmse_train)
 
+
     # Plot loss function vs epoch
     loss_curve = dnn.plot_loss(history.history)
     loss_curve.savefig('plots/loss.png')
+
+
+    # Test the neural network
+    dnn_prediction_test = dnn.test(trained_model="bike_sharing_trained", features=feats_test)
+
+    dnn_mae_test = mean_absolute_error(dnn_prediction_test, target_test)
+    dnn_mse_test = mean_squared_error(dnn_prediction_test, target_test)
+    dnn_rmse_test= np.sqrt(dnn_mse_test)
+
+    print ("True value testing:", target_test)
+    print ("DNN prediction testing:", dnn_prediction_test)
+
+    print ("Mean absolute error testing:", dnn_mae_test)
+    print ("Root mean squared error testing:", dnn_rmse_test)
