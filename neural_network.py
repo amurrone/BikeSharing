@@ -27,12 +27,15 @@ class NeuralNetwork():
 
     def build_model(self, activation, batch_norm, optimizer, loss, metrics):
         """
-        Build the neural network regression model
+        Build the neural network regression model.
 
         Parameters:
         ===========
         activation: activation function, same for all the hidden layers. No activation function in the last layer since this is a regression model and we want directly the predicted output.
         batch_norm: apply batch normalization algorithm.
+        optimizer: optimizer algorithm
+        loss: loss function
+        metrics: metrics
 
         Return:
         =======
@@ -51,14 +54,11 @@ class NeuralNetwork():
 
     def train(self, model, features, target, epochs, verbose, validation_split, trained_model):
         """
-        Train the neural network regression model
+        Train the neural network regression model.
 
         Parameters:
         ===========
         model: tf.keras neural network model
-        optimizer: optimizer algorithm
-        loss: loss function
-        metrics: metrics
         features: input features
         target: target features
         epochs: number of epochs
@@ -81,7 +81,7 @@ class NeuralNetwork():
 
     def test(self, trained_model, features):
         """
-        Test the neural network regression model
+        Test the neural network regression model.
 
         Parameters:
         ===========
@@ -100,7 +100,7 @@ class NeuralNetwork():
 
     def plot_loss(self, history):
         """
-        Generate loss vs epoch plot
+        Generate loss vs epoch plot.
 
         Parameters
         ==========
