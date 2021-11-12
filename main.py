@@ -118,3 +118,7 @@ if __name__ == "__main__":
 
     print ("Mean absolute error training:", dnn_mae_train)
     print ("Root mean squared error training:", dnn_rmse_train)
+
+    # Plot loss function vs epoch
+    loss_curve = dnn.plot_loss(history.history)
+    loss_curve.savefig('plots/loss.png')
