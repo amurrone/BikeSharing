@@ -15,7 +15,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 class NeuralNetwork():
 
-    def __init__(self, neurons: int, hidden_layers: int):
+    def __init__(self, neurons: int, hidden_layers):
         """
         Parameters:
         ===========
@@ -25,7 +25,7 @@ class NeuralNetwork():
         self.neurons = neurons
         self.hidden_layers = hidden_layers
 
-    def build_model(self, activation, batch_norm):
+    def build_model(self, activation, batch_norm, optimizer, loss, metrics):
         """
         Build the neural network regression model
 
@@ -45,9 +45,11 @@ class NeuralNetwork():
             model.add(Dense(self.neurons, activation=activation))
         model.add(Dense(1))
 
+        model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+
         return model
 
-    def train(self, model, optimizer, loss, metrics, features, target, epochs, verbose, validation_split, trained_model):
+    def train(self, model, features, target, epochs, verbose, validation_split, trained_model):
         """
         Train the neural network regression model
 
@@ -69,8 +71,6 @@ class NeuralNetwork():
         tensorflow.keras history object
         tensorflow.keras trained model
         """
-
-        model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
         log_dir = "logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)

@@ -105,11 +105,11 @@ if __name__ == "__main__":
 
     # Build the neural network
     dnn = NeuralNetwork(neurons=100, hidden_layers=3)
-    dnn_model = dnn.build_model(activation="relu", batch_norm="True")
+    dnn_model = dnn.build_model(activation="relu", batch_norm="True", optimizer="adam", loss="mse", metrics="accuracy")
 
     # Train the neural network
     logging.info("Training the neural network")
-    dnn_training = dnn.train(model=dnn_model, optimizer="adam", loss="mse", metrics="accuracy", features=feats_train, target=target_train, epochs=10, verbose=1, validation_split=0.2, trained_model="bike_sharing_trained")
+    dnn_training = dnn.train(model=dnn_model, features=feats_train, target=target_train, epochs=10, verbose=1, validation_split=0.2, trained_model="bike_sharing_trained")
     history = dnn_training[0]
 
     print (dnn_model.summary())
