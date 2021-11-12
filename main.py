@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import argparse
 import numpy as np
+import logging
 
 from preprocessing import PreProcessing
 from neural_network import NeuralNetwork
@@ -26,10 +27,16 @@ args = parser.parse_args()
 
 bike_sharing_path = args.dir
 
+logging.basicConfig(level=logging.INFO)
+
 if __name__ == "__main__":
+
+    logging.info("Loading data in {}".format(bike_sharing_path))
 
     data_hourly = PreProcessing.load_data(bike_sharing_path, csv_hourly)
     data_daily = PreProcessing.load_data(bike_sharing_path, csv_daily)
+
+    logging.info("Data succsesfully loaded!")
 
 
     # =================
@@ -62,6 +69,7 @@ if __name__ == "__main__":
 
 
     # One hot encoding of categorical features
+    logging.info("Performing one hot encoding for categorical features")
 
     list_final_features = []
     list_labels = []
@@ -100,10 +108,11 @@ if __name__ == "__main__":
     dnn_model = dnn.build_model(activation="relu", batch_norm="True")
 
     # Train the neural network
+    logging.info("Training the neural network")
     dnn_training = dnn.train(model=dnn_model, optimizer="adam", loss="mse", metrics="accuracy", features=feats_train, target=target_train, epochs=10, verbose=1, validation_split=0.2, trained_model="bike_sharing_trained")
     history = dnn_training[0]
 
-    #print (dnn_model.summary())
+    print (dnn_model.summary())
 
     # Evaluate the training performances
     dnn_prediction_train = dnn.test(trained_model="bike_sharing_trained", features=feats_train)
@@ -121,11 +130,13 @@ if __name__ == "__main__":
 
 
     # Plot loss function vs epoch
+    logging.info("Plotting loss function vs epoch")
     loss_curve = dnn.plot_loss(history.history)
     loss_curve.savefig('plots/loss.png')
 
 
     # Test the neural network
+    logging.info("Testing the neural network")
     dnn_prediction_test = dnn.test(trained_model="bike_sharing_trained", features=feats_test)
 
     dnn_mae_test = mean_absolute_error(dnn_prediction_test, target_test)
