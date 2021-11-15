@@ -3,7 +3,6 @@
 # ==============================================================================
 
 import datetime
-import matplotlib.pyplot as plt
 
 import tensorflow as tf
 from tensorflow.keras import Sequential
@@ -97,22 +96,3 @@ class NeuralNetwork():
         prediction = model.predict(features)
 
         return prediction
-
-    def plot_loss(self, history):
-        """
-        Generate loss vs epoch plot.
-
-        Parameters
-        ==========
-        history : history attribute of History object (History.history).
-        According to tensorflow.keras this a record of
-        training (validation) loss values and training (validation) metrics at successive epochs
-        """
-
-        fig = plt.figure()
-        plt.plot(history['loss'], label='Training loss')
-        plt.plot(history['val_loss'], label='Validation loss')
-        plt.xlabel("Epoch")
-        plt.ylabel("Loss")
-        plt.legend(loc="best")
-        return fig

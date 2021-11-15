@@ -3,6 +3,7 @@ import pandas as pd
 import argparse
 import numpy as np
 import logging
+import matplotlib.pyplot as plt
 
 from preprocessing import PreProcessing
 from neural_network import NeuralNetwork
@@ -28,6 +29,53 @@ args = parser.parse_args()
 bike_sharing_path = args.dir
 
 logging.basicConfig(level=logging.INFO)
+
+
+def plot_loss(history):
+    """
+    Generate loss vs epoch plot.
+
+    Parameters
+    ==========
+    history : history attribute of History object (History.history).
+    According to tensorflow.keras this a record of
+    training (validation) loss values and training (validation) metrics at successive epochs
+    """
+
+    fig = plt.figure()
+    plt.plot(history['loss'], label='Training loss')
+    plt.plot(history['val_loss'], label='Validation loss')
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.legend(loc="best")
+    return fig
+
+def plot_prediction(true, predicted):
+    """
+    Generate true vs predicted plot.
+
+    Parameters
+    ==========
+    true: np.array with true values
+    predicted: np.array with values predicted by the algorithm
+    """
+
+    fig = plt.figure()
+    plt.xlabel("True value")
+    plt.ylabel("Predicted value")
+    plt.plot(true, predicted, "b.", markersize=9)
+    true_max = true.max()
+    true_min = true.min()
+    predicted_max = predicted.max()
+    predicted_min = predicted.min()
+    lineEnd = true_max if true_max > predicted_max else predicted_max
+    lineStart = true_min if true_min < predicted_min else predicted_min
+    plt.plot([lineStart-10, lineEnd+10], [lineStart-10, lineEnd+10], 'k-', color = 'r')
+    plt.xlim(lineStart-10, lineEnd+10)
+    plt.ylim(lineStart-10, lineEnd+10)
+    return fig
+
+
 
 if __name__ == "__main__":
 
@@ -88,8 +136,10 @@ if __name__ == "__main__":
     new_features.remove("cnt")
 
 
+
     # Remove outliers in cnt (count rate)
     new_data_hourly = PreProcessing.remove_outliers(new_data_hourly, "cnt", 3)
+
 
     # Split the dataset into train and test samples
     train_set, test_set = train_test_split(new_data_hourly, test_size=0.33, random_state=123)
@@ -131,7 +181,7 @@ if __name__ == "__main__":
 
     # Plot loss function vs epoch
     logging.info("Plotting loss function vs epoch")
-    loss_curve = dnn.plot_loss(history.history)
+    loss_curve = plot_loss(history.history)
     loss_curve.savefig('plots/loss.png')
 
 
@@ -148,3 +198,8 @@ if __name__ == "__main__":
 
     print ("Mean absolute error testing:", dnn_mae_test)
     print ("Root mean squared error testing:", dnn_rmse_test)
+
+    # Plot true vs predicted values
+    true_vs_predicted = plot_prediction(target_test, dnn_prediction_test)
+    true_vs_predicted.show()
+    true_vs_predicted.savefig('plots/true_vs_predicted.png')
