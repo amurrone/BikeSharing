@@ -182,7 +182,7 @@ if __name__ == "__main__":
     # Plot loss function vs epoch
     logging.info("Plotting loss function vs epoch")
     loss_curve = plot_loss(history.history)
-    loss_curve.savefig('plots/loss.png')
+    loss_curve.savefig('plots/NeuralNetwork/loss.png')
 
 
     # Test the neural network
@@ -202,4 +202,4 @@ if __name__ == "__main__":
     # Plot true vs predicted values
     true_vs_predicted = plot_prediction(target_test, dnn_prediction_test)
     true_vs_predicted.show()
-    true_vs_predicted.savefig('plots/true_vs_predicted.png')
+    true_vs_predicted.savefig('plots/NeuralNetwork/true_vs_predicted.png')
