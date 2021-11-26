@@ -19,26 +19,27 @@ class NeuralNetwork():
         Parameters:
         ===========
         neurons: number of neurons of each layer. The number is supposed to be the same for each layer.
-        hidden_layers: number of hidden layers.
+        hidden_layers: number of hidden layers
         """
+
         self.neurons = neurons
         self.hidden_layers = hidden_layers
 
     def build_model(self, activation, batch_norm, optimizer, loss, metrics):
         """
-        Build the neural network regression model.
+        Build the neural network regression model
 
         Parameters:
         ===========
         activation: activation function, same for all the hidden layers. No activation function in the last layer since this is a regression model and we want directly the predicted output.
-        batch_norm: apply batch normalization algorithm.
+        batch_norm: apply batch normalization algorithm
         optimizer: optimizer algorithm
         loss: loss function
         metrics: metrics
 
         Return:
         =======
-        tensorflow.keras neural network model.
+        tensorflow.keras neural network model
         """
 
         model = Sequential()
@@ -53,7 +54,7 @@ class NeuralNetwork():
 
     def train(self, model, features, target, epochs, verbose, validation_split, trained_model):
         """
-        Train the neural network regression model.
+        Train the neural network regression model
 
         Parameters:
         ===========
@@ -80,7 +81,7 @@ class NeuralNetwork():
 
     def test(self, trained_model, features):
         """
-        Test the neural network regression model.
+        Test the neural network regression model
 
         Parameters:
         ===========

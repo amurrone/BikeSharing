@@ -12,7 +12,7 @@ class PreProcessing():
 
     def load_data(path, csv):
         """
-        Load data.
+        Load data
 
         Parameters:
         ===========
@@ -31,7 +31,7 @@ class PreProcessing():
 
     def fit_transform_ohe(df, col):
         """
-        One hot encoding for the specified column.
+        One hot encoding for the specified column
 
         Parameters:
         ===========
@@ -56,7 +56,7 @@ class PreProcessing():
 
     def remove_outliers(df, col, std):
         """
-        Remove outliers.
+        Remove outliers
 
         Parameters:
         ===========

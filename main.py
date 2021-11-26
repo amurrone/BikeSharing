@@ -33,13 +33,13 @@ logging.basicConfig(level=logging.INFO)
 
 def plot_loss(history):
     """
-    Generate loss vs epoch plot.
+    Generate loss vs epoch plot
 
     Parameters
     ==========
     history : history attribute of History object (History.history).
     According to tensorflow.keras this a record of
-    training (validation) loss values and training (validation) metrics at successive epochs
+    training (validation) loss values and training (validation) metrics at successive epochs.
     """
 
     fig = plt.figure()
@@ -52,7 +52,7 @@ def plot_loss(history):
 
 def plot_prediction(true, predicted):
     """
-    Generate true vs predicted plot.
+    Generate true vs predicted plot
 
     Parameters
     ==========
