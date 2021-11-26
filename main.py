@@ -153,8 +153,12 @@ if __name__ == "__main__":
     target_train = train_set.reindex(columns=target).values.ravel()
     target_test = test_set.reindex(columns=target).values.ravel()
 
-    #train_set.hist(column="cnt", bins=1000)
-    #testtest_set.hist(column="cnt", bins=1000)
+    # Check wether there is some bias in train and test samples
+    train_set.hist(column="cnt", bins=1000)
+    plt.savefig('plots/NeuralNetwork/train_histo.png')
+    test_set.hist(column="cnt", bins=1000)
+    plt.savefig('plots/NeuralNetwork/test_histo.png')
+
 
     # Build the neural network
     dnn = NeuralNetwork(neurons=100, hidden_layers=3)
