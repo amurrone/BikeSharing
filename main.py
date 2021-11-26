@@ -133,8 +133,11 @@ if __name__ == "__main__":
     new_data_hourly = pd.concat(list_final_features, axis=1)
     new_features = (new_data_hourly.columns).tolist()
 
+    # Remove target feature from the inputs
     new_features.remove("cnt")
 
+    # Remove atemp feature as this is highly correlated with temp (see correlation map) and we want to avoid multicollinearity problems in the neural network
+    new_features.remove("atemp")
 
 
     # Remove outliers in cnt (count rate)
@@ -151,7 +154,7 @@ if __name__ == "__main__":
     target_test = test_set.reindex(columns=target).values.ravel()
 
     #train_set.hist(column="cnt", bins=1000)
-    #test_set.hist(column="cnt", bins=1000)
+    #testtest_set.hist(column="cnt", bins=1000)
 
     # Build the neural network
     dnn = NeuralNetwork(neurons=100, hidden_layers=3)
