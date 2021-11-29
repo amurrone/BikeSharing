@@ -155,9 +155,9 @@ if __name__ == "__main__":
 
     # Check wether there is some bias in train and test samples
     train_set.hist(column="cnt", bins=1000)
-    plt.savefig('plots/NeuralNetwork/train_histo.png')
+    plt.savefig('plots/NeuralNetwork/train_histo.pdf')
     test_set.hist(column="cnt", bins=1000)
-    plt.savefig('plots/NeuralNetwork/test_histo.png')
+    plt.savefig('plots/NeuralNetwork/test_histo.pdf')
 
 
     # Build the neural network
@@ -189,7 +189,7 @@ if __name__ == "__main__":
     # Plot loss function vs epoch
     logging.info("Plotting loss function vs epoch")
     loss_curve = plot_loss(history.history)
-    loss_curve.savefig('plots/NeuralNetwork/loss.png')
+    loss_curve.savefig('plots/NeuralNetwork/loss.pdf')
 
 
     # Test the neural network
@@ -209,4 +209,4 @@ if __name__ == "__main__":
     # Plot true vs predicted values
     true_vs_predicted = plot_prediction(target_test, dnn_prediction_test)
     true_vs_predicted.show()
-    true_vs_predicted.savefig('plots/NeuralNetwork/true_vs_predicted.png')
+    true_vs_predicted.savefig('plots/NeuralNetwork/true_vs_predicted.pdf')
