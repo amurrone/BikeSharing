@@ -141,7 +141,7 @@ if __name__ == "__main__":
 
 
     # Remove outliers in cnt (count rate)
-    new_data_hourly = PreProcessing.remove_outliers(new_data_hourly, "cnt", 3)
+    new_data_hourly = PreProcessing.remove_outliers(new_data_hourly, "cnt", 2)
 
 
     # Split the dataset into train and test samples
