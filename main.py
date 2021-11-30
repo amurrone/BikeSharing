@@ -155,8 +155,14 @@ if __name__ == "__main__":
 
     # Check wether there is some bias in train and test samples
     train_set.hist(column="cnt", bins=1000)
+    plt.title("")
+    plt.xlabel("cnt")
+    plt.ylabel("Frequency")
     plt.savefig('plots/NeuralNetwork/train_histo.pdf')
     test_set.hist(column="cnt", bins=1000)
+    plt.title("")
+    plt.xlabel("cnt")
+    plt.ylabel("Frequency")
     plt.savefig('plots/NeuralNetwork/test_histo.pdf')
 
 
